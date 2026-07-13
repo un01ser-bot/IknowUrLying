@@ -9,16 +9,19 @@ IPointerClickHandler
 {
     public void OnPointerEnter(PointerEventData eventData)
     {
-        CursorController.Instance.HoverEnter();
+        if (CursorController.Instance != null)
+            CursorController.Instance.HoverEnter();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        CursorController.Instance.HoverExit();
+        if (CursorController.Instance != null)
+            CursorController.Instance.HoverExit();
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        CursorController.Instance.Click();
+        if (CursorController.Instance != null)
+            CursorController.Instance.Click();
     }
 }

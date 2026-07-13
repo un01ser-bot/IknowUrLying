@@ -5,6 +5,7 @@ public class CursorController : MonoBehaviour
     public static CursorController Instance;
 
     RectTransform rect;
+    bool isHovering;
 
     [Header("Settings")]
     public float normalScale = 1f;
@@ -20,21 +21,26 @@ public class CursorController : MonoBehaviour
 
         rect = GetComponent<RectTransform>();
 
-        Cursor.visible = false;
+        HideSystemCursor();
 
         targetScale = Vector3.one * normalScale;
     }
 
-    private void Start()
+    void OnEnable()
     {
-        if (Cursor.visible)
-        {
-            Cursor.visible = false;
-        }
+        HideSystemCursor();
+    }
+
+    void OnApplicationFocus(bool hasFocus)
+    {
+        if (hasFocus)
+            HideSystemCursor();
     }
 
     void Update()
     {
+        HideSystemCursor();
+
         rect.position = Input.mousePosition;
 
         rect.localScale = Vector3.Lerp(
@@ -53,11 +59,13 @@ public class CursorController : MonoBehaviour
 
     public void HoverEnter()
     {
+        isHovering = true;
         targetScale = Vector3.one * hoverScale;
     }
 
     public void HoverExit()
     {
+        isHovering = false;
         targetScale = Vector3.one * normalScale;
     }
 
@@ -76,7 +84,15 @@ public class CursorController : MonoBehaviour
 
         targetRotation = 0f;
 
-        targetScale = Vector3.one *
-            (hoverScale == targetScale.x ? hoverScale : normalScale);
+        targetScale = Vector3.one * (isHovering ? hoverScale : normalScale);
+    }
+
+    void HideSystemCursor()
+    {
+        if (Cursor.visible)
+            Cursor.visible = false;
+
+        if (Cursor.lockState != CursorLockMode.None)
+            Cursor.lockState = CursorLockMode.None;
     }
 }
