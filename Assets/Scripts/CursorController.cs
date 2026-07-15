@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CursorController : MonoBehaviour
 {
@@ -17,9 +18,16 @@ public class CursorController : MonoBehaviour
 
     void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         Instance = this;
 
         rect = GetComponent<RectTransform>();
+        MoveToPersistentCursorCanvas();
 
         HideSystemCursor();
 
@@ -94,5 +102,29 @@ public class CursorController : MonoBehaviour
 
         if (Cursor.lockState != CursorLockMode.None)
             Cursor.lockState = CursorLockMode.None;
+    }
+
+    void MoveToPersistentCursorCanvas()
+    {
+        Canvas currentCanvas = GetComponentInParent<Canvas>();
+
+        if (currentCanvas != null && currentCanvas.gameObject.name == "PersistentCursorCanvas")
+        {
+            DontDestroyOnLoad(currentCanvas.gameObject);
+            return;
+        }
+
+        GameObject canvasObject = new GameObject("PersistentCursorCanvas");
+        Canvas canvas = canvasObject.AddComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        canvas.sortingOrder = 999;
+
+        CanvasScaler scaler = canvasObject.AddComponent<CanvasScaler>();
+        scaler.uiScaleMode = CanvasScaler.ScaleMode.ConstantPixelSize;
+
+        transform.SetParent(canvasObject.transform, false);
+        transform.SetAsLastSibling();
+
+        DontDestroyOnLoad(canvasObject);
     }
 }
