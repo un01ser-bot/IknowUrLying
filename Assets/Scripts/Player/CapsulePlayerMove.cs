@@ -17,83 +17,150 @@ public class CapsulePlayerMove : MonoBehaviour
     private float verticalVelocity;
     private float cameraPitch;
 
+    // true면 1인칭 조작 중
+    private bool firstPersonControlEnabled = true;
+
     private void Awake()
     {
-        characterController = GetComponent<CharacterController>();
+        characterController =
+            GetComponent<CharacterController>();
     }
 
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        EnterFirstPersonMode();
     }
 
     private void Update()
     {
+        HandleCursorMode();
+
+        if (!firstPersonControlEnabled)
+        {
+            return;
+        }
+
         Move();
         Look();
-        HandleCursor();
     }
 
     private void Move()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
+        float horizontal =
+            Input.GetAxisRaw("Horizontal");
+
+        float vertical =
+            Input.GetAxisRaw("Vertical");
 
         Vector3 moveDirection =
             transform.right * horizontal +
             transform.forward * vertical;
 
-        moveDirection = Vector3.ClampMagnitude(moveDirection, 1f);
+        moveDirection =
+            Vector3.ClampMagnitude(moveDirection, 1f);
 
-        if (characterController.isGrounded && verticalVelocity < 0f)
+        if (characterController.isGrounded &&
+            verticalVelocity < 0f)
         {
             verticalVelocity = -2f;
         }
 
         verticalVelocity += gravity * Time.deltaTime;
 
-        Vector3 finalMovement = moveDirection * moveSpeed;
+        Vector3 finalMovement =
+            moveDirection * moveSpeed;
+
         finalMovement.y = verticalVelocity;
 
-        characterController.Move(finalMovement * Time.deltaTime);
+        characterController.Move(
+            finalMovement * Time.deltaTime
+        );
     }
 
     private void Look()
     {
-        if (cameraTransform == null)
-        {
-            return;
-        }
+        float mouseX =
+            Input.GetAxis("Mouse X") *
+            mouseSensitivity;
 
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
+        float mouseY =
+            Input.GetAxis("Mouse Y") *
+            mouseSensitivity;
 
         transform.Rotate(Vector3.up * mouseX);
 
         cameraPitch -= mouseY;
+
         cameraPitch = Mathf.Clamp(
             cameraPitch,
             -maxLookAngle,
             maxLookAngle
         );
 
-        cameraTransform.localRotation =
-            Quaternion.Euler(cameraPitch, 0f, 0f);
+        if (cameraTransform != null)
+        {
+            cameraTransform.localRotation =
+                Quaternion.Euler(
+                    cameraPitch,
+                    0f,
+                    0f
+                );
+        }
     }
 
-    private void HandleCursor()
+    private void HandleCursorMode()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            ExitFirstPersonMode();
+            return;
         }
 
-        if (Input.GetMouseButtonDown(0))
+        // 커서가 풀려 있는 상태에서
+        // 마우스 왼쪽 클릭 시 다시 1인칭 모드
+        if (!firstPersonControlEnabled &&
+            Input.GetMouseButtonDown(0))
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            EnterFirstPersonMode();
+        }
+    }
+
+    private void EnterFirstPersonMode()
+    {
+        firstPersonControlEnabled = true;
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
+        if (CursorController.Instance != null)
+        {
+            CursorController.Instance.HideCustomCursor();
+        }
+    }
+
+    private void ExitFirstPersonMode()
+    {
+        firstPersonControlEnabled = false;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = false;
+
+        if (CursorController.Instance != null)
+        {
+            CursorController.Instance.ShowCustomCursor();
+        }
+    }
+
+    private void OnDisable()
+    {
+        // 플레이어 오브젝트가 꺼지거나
+        // 다른 씬으로 이동할 때 커서를 다시 UI 모드로 복구
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = false;
+
+        if (CursorController.Instance != null)
+        {
+            CursorController.Instance.ShowCustomCursor();
         }
     }
 }
