@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64f8d3204a4ba624eb0023da4ab08119, type: 3}
+  m_Name: Evidence_TestPoop
+  m_EditorClassIdentifier: 
+  evidenceId: TestPoop
+  evidenceName: "\uB625"
+  discoveredLocation: "\uD654\uC7A5\uC2E4 \uBCC0\uAE30 \uC548"
+  description: "\uBB3C\uC744 \uB0B4\uB9AC\uB294 \uAC78 \uC78A\uC740 \uAC83 \uAC19\uB2E4"
+  evidenceImage: {fileID: 21300000, guid: 2b92801a6db053f4483748c76a3104a4, type: 3}
+  developerMemo: 

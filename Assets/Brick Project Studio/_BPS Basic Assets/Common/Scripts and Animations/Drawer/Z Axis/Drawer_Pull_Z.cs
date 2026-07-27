@@ -3,71 +3,69 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace SojaExiles
-
 {
-	public class Drawer_Pull_Z : MonoBehaviour
-	{
+    public class Drawer_Pull_Z : MonoBehaviour
+    {
+        public Animator pull;
+        public bool open;
+        public Transform Player;
 
-		public Animator pull;
-		public bool open;
-		public Transform Player;
+        void Start()
+        {
+            open = false;
 
-		void Start()
-		{
-			open = false;
-		}
+            // Player가 비어 있으면 Player 태그로 자동 찾기
+            if (Player == null)
+            {
+                GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
 
-		void OnMouseOver()
-		{
-			{
-				if (Player)
-				{
-					float dist = Vector3.Distance(Player.position, transform.position);
-					if (dist < 10)
-					{
-						print("object name");
-						if (open == false)
-						{
-							if (Input.GetMouseButtonDown(0))
-							{
-								StartCoroutine(opening());
-							}
-						}
-						else
-						{
-							if (open == true)
-							{
-								if (Input.GetMouseButtonDown(0))
-								{
-									StartCoroutine(closing());
-								}
-							}
+                if (playerObject != null)
+                {
+                    Player = playerObject.transform;
+                }
+                else
+                {
+                    Debug.LogWarning("Player 태그가 붙은 오브젝트를 찾지 못했습니다.");
+                }
+            }
+        }
 
-						}
+        void OnMouseOver()
+        {
+            if (Player != null)
+            {
+                float dist = Vector3.Distance(Player.position, transform.position);
 
-					}
-				}
+                if (dist < 10f && Input.GetMouseButtonDown(0))
+                {
+                    if (!open)
+                    {
+                        StartCoroutine(opening());
+                    }
+                    else
+                    {
+                        StartCoroutine(closing());
+                    }
+                }
+            }
+        }
 
-			}
+        IEnumerator opening()
+        {
+            print("you are opening the drawer");
+            pull.Play("openpull");
+            open = true;
 
-		}
+            yield return new WaitForSeconds(.5f);
+        }
 
-		IEnumerator opening()
-		{
-			print("you are opening the door");
-			pull.Play("openpull");
-			open = true;
-			yield return new WaitForSeconds(.5f);
-		}
+        IEnumerator closing()
+        {
+            print("you are closing the drawer");
+            pull.Play("closepush");
+            open = false;
 
-		IEnumerator closing()
-		{
-			print("you are closing the door");
-			pull.Play("closepush");
-			open = false;
-			yield return new WaitForSeconds(.5f);
-		}
-
-
-	}
+            yield return new WaitForSeconds(.5f);
+        }
+    }
 }

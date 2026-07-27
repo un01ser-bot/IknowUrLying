@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(CharacterController))]
 public class CapsulePlayerMove : MonoBehaviour
@@ -116,11 +117,20 @@ public class CapsulePlayerMove : MonoBehaviour
             return;
         }
 
-        // 커서가 풀려 있는 상태에서
-        // 마우스 왼쪽 클릭 시 다시 1인칭 모드
+        // 커서가 풀린 상태에서 왼쪽 클릭 시
         if (!firstPersonControlEnabled &&
             Input.GetMouseButtonDown(0))
         {
+            bool pointerOverUI =
+                EventSystem.current != null &&
+                EventSystem.current.IsPointerOverGameObject();
+
+            // UI 위를 클릭한 경우에는 1인칭 모드로 돌아가지 않음
+            if (pointerOverUI)
+            {
+                return;
+            }
+
             EnterFirstPersonMode();
         }
     }
