@@ -18,8 +18,11 @@ public class CapsulePlayerMove : MonoBehaviour
     private float verticalVelocity;
     private float cameraPitch;
 
-    // true면 1인칭 조작 중
+    // true면 현재 1인칭 조작 중
     private bool firstPersonControlEnabled = true;
+
+    // true면 심문 UI 등에 의해 조작이 강제로 잠긴 상태
+    private bool externalControlLocked = false;
 
     private void Awake()
     {
@@ -34,7 +37,12 @@ public class CapsulePlayerMove : MonoBehaviour
 
     private void Update()
     {
-        HandleCursorMode();
+        // 심문 중이 아닐 때만
+        // ESC와 마우스 클릭으로 커서 모드를 변경할 수 있음
+        if (!externalControlLocked)
+        {
+            HandleCursorMode();
+        }
 
         if (!firstPersonControlEnabled)
         {
@@ -58,7 +66,10 @@ public class CapsulePlayerMove : MonoBehaviour
             transform.forward * vertical;
 
         moveDirection =
-            Vector3.ClampMagnitude(moveDirection, 1f);
+            Vector3.ClampMagnitude(
+                moveDirection,
+                1f
+            );
 
         if (characterController.isGrounded &&
             verticalVelocity < 0f)
@@ -66,12 +77,14 @@ public class CapsulePlayerMove : MonoBehaviour
             verticalVelocity = -2f;
         }
 
-        verticalVelocity += gravity * Time.deltaTime;
+        verticalVelocity +=
+            gravity * Time.deltaTime;
 
         Vector3 finalMovement =
             moveDirection * moveSpeed;
 
-        finalMovement.y = verticalVelocity;
+        finalMovement.y =
+            verticalVelocity;
 
         characterController.Move(
             finalMovement * Time.deltaTime
@@ -88,7 +101,9 @@ public class CapsulePlayerMove : MonoBehaviour
             Input.GetAxis("Mouse Y") *
             mouseSensitivity;
 
-        transform.Rotate(Vector3.up * mouseX);
+        transform.Rotate(
+            Vector3.up * mouseX
+        );
 
         cameraPitch -= mouseY;
 
@@ -123,9 +138,11 @@ public class CapsulePlayerMove : MonoBehaviour
         {
             bool pointerOverUI =
                 EventSystem.current != null &&
-                EventSystem.current.IsPointerOverGameObject();
+                EventSystem.current
+                    .IsPointerOverGameObject();
 
-            // UI 위를 클릭한 경우에는 1인칭 모드로 돌아가지 않음
+            // UI 위를 클릭했다면
+            // 1인칭 모드로 돌아가지 않음
             if (pointerOverUI)
             {
                 return;
@@ -137,14 +154,23 @@ public class CapsulePlayerMove : MonoBehaviour
 
     private void EnterFirstPersonMode()
     {
+        // 심문 등으로 잠긴 상태라면
+        // 1인칭 모드로 돌아가지 못함
+        if (externalControlLocked)
+        {
+            return;
+        }
+
         firstPersonControlEnabled = true;
 
         Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState =
+            CursorLockMode.Locked;
 
         if (CursorController.Instance != null)
         {
-            CursorController.Instance.HideCustomCursor();
+            CursorController.Instance
+                .HideCustomCursor();
         }
     }
 
@@ -152,25 +178,55 @@ public class CapsulePlayerMove : MonoBehaviour
     {
         firstPersonControlEnabled = false;
 
-        Cursor.lockState = CursorLockMode.None;
+        Cursor.lockState =
+            CursorLockMode.None;
+
         Cursor.visible = false;
 
         if (CursorController.Instance != null)
         {
-            CursorController.Instance.ShowCustomCursor();
+            CursorController.Instance
+                .ShowCustomCursor();
         }
+    }
+
+    // 심문 UI를 열 때 호출
+    public void DisablePlayerControl()
+    {
+        externalControlLocked = true;
+        firstPersonControlEnabled = false;
+
+        Cursor.lockState =
+            CursorLockMode.None;
+
+        Cursor.visible = false;
+
+        if (CursorController.Instance != null)
+        {
+            CursorController.Instance
+                .ShowCustomCursor();
+        }
+    }
+
+    // 심문 UI를 닫을 때 호출
+    public void EnablePlayerControl()
+    {
+        externalControlLocked = false;
+
+        EnterFirstPersonMode();
     }
 
     private void OnDisable()
     {
-        // 플레이어 오브젝트가 꺼지거나
-        // 다른 씬으로 이동할 때 커서를 다시 UI 모드로 복구
-        Cursor.lockState = CursorLockMode.None;
+        Cursor.lockState =
+            CursorLockMode.None;
+
         Cursor.visible = false;
 
         if (CursorController.Instance != null)
         {
-            CursorController.Instance.ShowCustomCursor();
+            CursorController.Instance
+                .ShowCustomCursor();
         }
     }
 }

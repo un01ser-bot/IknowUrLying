@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/AssistantRoom.unity
     guid: 1d1a286f69a66194e8c269f806b17b9c
+  - enabled: 1
+    path: Assets/Scenes/ChatScene.unity
+    guid: a1bb440e388c4cc4bb771d9056ed1b77
   m_configObjects: {}

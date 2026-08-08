@@ -14,6 +14,9 @@ public class SuspectProfile : ScriptableObject
     public int age;
     public string occupation;
 
+    [Header("용의자 이미지")]
+    public Sprite suspectImage;
+
     [Header("말투 / 성격")]
     [TextArea(3, 5)]
     public string personality;
