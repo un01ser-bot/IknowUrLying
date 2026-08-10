@@ -16,5 +16,7 @@ MonoBehaviour:
   evidenceName: "\uADF8\uB0E5\uD734\uB300\uD3F0"
   discoveredLocation: "\uCE68\uB300 \uC606 \uD0C1\uC0C1 \uC704"
   description: "\uC544\uCC28\uCC28 \uD3F0\uC778\uC904 \uC54C\uC558\uB354\uB2C8 \uAC8C\uC784\uAE30\uB124\uC694"
+  relatedSuspects:
+  - {fileID: 11400000, guid: c1efd19377bf44f4f803fcc33f80cea3, type: 2}
   evidenceImage: {fileID: 21300000, guid: fbc6d40596a93f946a0d9e86b46cf59f, type: 3}
   developerMemo: 

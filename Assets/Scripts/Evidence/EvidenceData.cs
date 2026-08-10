@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(
@@ -18,6 +19,11 @@ public class EvidenceData : ScriptableObject
 
     [TextArea(4, 10)]
     public string description;
+
+    [Header("관련 용의자")]
+    [Tooltip("이 증거와 관련된 용의자들을 등록하세요.")]
+    public List<SuspectProfile> relatedSuspects =
+        new List<SuspectProfile>();
 
     [Header("증거 이미지")]
     public Sprite evidenceImage;
