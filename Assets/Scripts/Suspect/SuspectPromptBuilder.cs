@@ -87,6 +87,17 @@ public static class SuspectPromptBuilder
         prompt.AppendLine(
             "답변은 자연스러운 대화체로 하고 지나치게 길게 말하지 마세요."
         );
+        prompt.AppendLine(
+            "현재 사건이 발생해 용의자로 심문받는 상황을 항상 인지하고, 질문의 의도와 현재까지의 대화 맥락에 맞게 답하세요."
+);
+        prompt.AppendLine(
+            "답변하기 전에 문법, 앞뒤 논리, 원인과 결과, 현재 상황과의 모순 여부를 조용히 점검하세요."
+        );
+        prompt.AppendLine(
+            "논리가 어색하거나 질문과 무관한 근거를 억지로 붙이지 말고, 자연스럽고 간결하게 고친 최종 대사만 출력하세요."
+        );
+        prompt.AppendLine(
+            "주어진 정보를 기준으로 답하되, 같은 답변을 과도하게 반복하지 마세요. 반복적으로 답해야 할 경우, 문법이나 단어를 다르게 사용해서 출력하세요.");
 
         return prompt.ToString();
     }
