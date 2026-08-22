@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dad1993ebc172374da5bb1de4ff5414c, type: 3}
+  m_Name: testsuspect_2
+  m_EditorClassIdentifier: 
+  suspectId: test_02
+  suspectName: "\uC774\uC9C0\uC601"
+  age: 36
+  occupation: "\uD68C\uC0AC \uC601\uC5C5\uD300 \uD300\uC7A5"
+  suspectImage: {fileID: 21300000, guid: 6407a7f2dc09ee34b826c5120cd8fd5c, type: 3}
+  personality: "\uC0AC\uB9AC\uBD84\uBCC4\uC774 \uC815\uD655\uD558\uACE0 \uB17C\uB9AC\uC801\uC778
+    \uC131\uACA9\uC774\uB2E4. \uC6A9\uC758\uC790\uB85C \uBD88\uB824\uC628 \uC0C1\uD669\uC5D0
+    \uB300\uD574 \uC815\uD655\uD788 \uC778\uC9C0\uD558\uACE0 \uACB0\uBC31\uC744 \uC99D\uBA85\uD558\uB824
+    \uD55C\uB2E4."
+  speakingStyle: "\uB300\uCCB4\uB85C \uCC28\uAC00\uC6B4 \uB9D0\uD22C\uC774\uC9C0\uB9CC
+    \uC815\uC911\uD55C \uD0DC\uB3C4\uB97C \uC720\uC9C0\uD55C\uB2E4. \uC0AC\uD68C\uC0DD\uD65C\uC6A9
+    \uBA58\uD2B8\uB97C \uC911\uAC04\uC911\uAC04 \uC11E\uACE0, \uCCAD\uC790\uC758
+    \uAE30\uBD84\uC744 \uACE0\uB824\uD558\uBA70 \uB9D0\uD55C\uB2E4."
+  relationshipToVictim: "\uD53C\uD574\uC790(\uAE40\uC218\uC7AC)\uAC00 \uB2E4\uB2C8\uB294
+    \uD68C\uC0AC\uC758 \uAC19\uC740 \uD300 \uD300\uC7A5\uC774\uB2E4."
+  truthStatements:
+  - statementId: truth_004
+    content: "\uD68C\uC0AC\uC5D0\uC11C \uAE40\uC218\uC7AC\uC640 \uB530\uB85C \uB9CC\uB098
+      \uAE40\uC218\uC7AC\uAC00 \uC790\uC2E0\uC758 \uBE44\uB9AC \uC0AC\uC2E4\uC744
+      \uC54C\uAC8C \uB41C \uAC83\uC5D0 \uB300\uD574 \uD568\uAD6C\uD558\uB77C\uACE0
+      \uC9C0\uC2DC, \uB1CC\uBB3C\uB85C \uBE44\uC2FC \uC220\uC744 \uC120\uBB3C."
+  - statementId: truth_005
+    content: "\uAE40\uC218\uC7AC\uAC00 \uC790\uC2E0\uC774 \uC900 \uC220\uC744 \uC790\uC2E0\uC758
+      \uC0AC\uBB34\uC2E4\uC5D0 \uB2E4\uC2DC \uB3CC\uB824\uC900 \uAC83\uC744 \uD655\uC778,
+      \uD654\uAC00 \uB09C \uCC44\uB85C \uAE40\uC218\uC7AC\uB97C \uCC3E\uC73C\uB7EC
+      \uB3CC\uC544\uB2E4\uB2D8."
+  claimStatements:
+  - statementId: claim_004
+    content: "\uD68C\uC0AC\uC5D0\uC11C \uAE40\uC218\uC7AC\uC640 \uB9C8\uC8FC\uCCE4\uC9C0\uB9CC
+      \uB530\uB85C \uB3C5\uB300\uD55C \uC801 \uC5C6\uC74C."
+    isLie: 1
+  - statementId: claim_005
+    content: "\uD68C\uC0AC\uC5D0\uC11C \uAE40\uC218\uC7AC\uC640 \uB9C8\uC8FC\uCCE4\uC9C0\uB9CC
+      \uB530\uB85C \uB3C5\uB300\uD55C \uC801 \uC5C6\uC74C."
+    isLie: 1
